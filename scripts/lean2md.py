@@ -1,6 +1,8 @@
 """
 lean ファイルから md ファイルを生成するスクリプト．
-lean2md という Python スクリプトを日本語対応させたもの．
+lean2md という Python スクリプトをもとに，下記の改変を加えている．
+* マルチバイト文字に対応させる
+* `import` から始まる行を無視する
 
 The MIT License (MIT)
 Copyright (c) 2022 Arthur Paulino
