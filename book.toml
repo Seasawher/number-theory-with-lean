@@ -9,3 +9,8 @@ description = "定理証明支援系 Lean を用いて，整数論を学びま�
 [build]
 create-missing = false
 build-dir = "book"
+
+[output.html]
+additional-js = ["assets/leanweb.js", "assets/fzf.umd.js", "assets/elasticlunr.js"]
+no-section-label = true
+git-repository-url = "https://github.com/lean-ja/number-theory-with-lean"

@@ -1,4 +1,7 @@
 """
+lean ファイルから md ファイルを生成するスクリプト．
+lean2md という Python スクリプトを日本語対応させたもの．
+
 The MIT License (MIT)
 Copyright (c) 2022 Arthur Paulino
 
