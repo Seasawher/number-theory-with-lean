@@ -7,3 +7,6 @@
 
 # python project
 .mypy_cache/
+
+# mdbook
+book/
