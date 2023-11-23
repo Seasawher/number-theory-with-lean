@@ -1,0 +1,7 @@
+{
+  "triggerTaskOnSave.tasks": {
+    "lean2md": [
+        "NTL/*.lean",
+    ],
+  }
+}

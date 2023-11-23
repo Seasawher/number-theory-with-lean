@@ -10,3 +10,5 @@
 
 # mdbook
 book/
+NTL/*.md
+!NTL/SUMMARY.md
