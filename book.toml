@@ -4,7 +4,7 @@ language = "ja"
 multilingual = false
 src = "NTL"
 title = "Lean で学ぶ初めての整数論"
-description = "定理証明支援系 Lean を用いて，整数論を学びましょう！"
+description = "定理証明支援系 Lean を使って整数論を学びます．"
 
 [build]
 create-missing = false
