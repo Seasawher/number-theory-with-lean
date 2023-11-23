@@ -13,6 +13,11 @@ def build_blocks(lines):
     content = ""
     for i, line_n in enumerate(lines):
         line = line_n.split("\n")[0]
+
+        # ignore `import` lines
+        if line.startswith("import") and reading_lean_code:
+            continue
+
         if line.startswith("/-"):
             if not reading_lean_code:
                 raise RuntimeError(
