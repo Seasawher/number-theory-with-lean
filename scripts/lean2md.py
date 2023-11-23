@@ -1,9 +1,4 @@
 """
-lean ファイルから md ファイルを生成するスクリプト．
-lean2md という Python スクリプトをもとに，下記の改変を加えている．
-* マルチバイト文字に対応させる
-* `import` から始まる行を無視する
-
 The MIT License (MIT)
 Copyright (c) 2022 Arthur Paulino
 
@@ -20,11 +15,8 @@ def build_blocks(lines):
     content = ""
     for i, line_n in enumerate(lines):
         line = line_n.split("\n")[0]
-
-        # ignore `import` lines
-        if line.startswith("import") and reading_lean_code:
+        if line.endswith("--#"):
             continue
-
         if line.startswith("/-"):
             if not reading_lean_code:
                 raise RuntimeError(
