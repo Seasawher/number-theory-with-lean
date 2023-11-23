@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Lean で学ぶ初めての整数論 - Lean で学ぶ初めての整数論</title>
+        <title>前提条件 - Lean で学ぶ初めての整数論</title>
 
 
         <!-- Custom HTML head -->
@@ -85,7 +85,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html" class="active">Lean で学ぶ初めての整数論</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="Prerequisite.html">前提条件</a></li><li class="chapter-item expanded "><a href="Euclid.html">直線の格子点とEuclid のアルゴリズム</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Lean で学ぶ初めての整数論</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="Prerequisite.html" class="active">前提条件</a></li><li class="chapter-item expanded "><a href="Euclid.html">直線の格子点とEuclid のアルゴリズム</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -176,29 +176,32 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="lean-で学ぶ初めての整数論"><a class="header" href="#lean-で学ぶ初めての整数論">Lean で学ぶ初めての整数論</a></h1>
-<p>定理証明支援系 Lean を使って，整数論を学んでいこうという本です．</p>
-<p>Lean の解説ではなく数学の解説を目的としているため，読者が Lean にある程度慣れていることを仮定しています．</p>
-<h2 id="リンク集"><a class="header" href="#リンク集">リンク集</a></h2>
-<p>無料で閲覧できるものに限定して，参考になりそうな資料を紹介します．Lean については，次のようなものがあります．</p>
+                        <h1 id="前提条件"><a class="header" href="#前提条件">前提条件</a></h1>
+<p>Lean は定理証明支援系なので，話の中で必要になるすべての概念・定義をすべて実装する必要があります．完璧に形式的で，機械が読めるような証明を書かなければいけないことを考えると，仕方のないことです．</p>
+<p>だからといって，「自然数の足し算は可換」とか「整数の掛け算と足し算は交換する」といったことをいちいち証明していると本題に入れなくなってしまうので，本書では適当にライブラリを引用することにします．</p>
+<p>どこまでを仮定として認めるかですが，数学の教科書に書いてあるような書き方をすると</p>
 <ul>
-<li><a href="https://leanprover-community.github.io/mathematics_in_lean/">Mathematics in Lean</a> Lean で数学がどのように形式化できるか解説する教科書です．</li>
-<li><a href="https://hrmacbeth.github.io/math2001/">The mechanics of proof</a> 数学的な証明の書き方について，Lean を使って説明した教科書です．一部 Mathlib にないタクティクを使っているところがあるので，読まれる際は注意してください．</li>
-<li><a href="https://lean-ja.github.io/tactic-cheatsheet/">Lean4 タクティク逆引きリスト</a> Lean 4 の基本的なタクティク・コマンドの早見表です．</li>
+<li>選択公理や排中律 <sup class="footnote-reference"><a href="#logic">1</a></sup></li>
+<li>整数には負の数，ゼロ，正の数がある</li>
+<li>任意の2つの整数 $a, b$ は大小が比較できる．専門的な言い方をすると，整数には線形順序(全順序)が入っている．</li>
+<li>整数には足し算，引き算，掛け算，べき乗が定義されている</li>
+<li>足し算や掛け算は順序によらないし，括弧が不要．そして足し算と掛け算の間には分配法則が成り立つ．専門的な言い方をすると，整数は可換環をなす．</li>
 </ul>
-<p>整数論については，次のようなものがあります.</p>
-<ul>
-<li><a href="https://shoup.net/ntb/">A Computational Introduction to Number Theory and Algebra</a> &quot;Computational&quot; とある通り，アルゴリズムの計算量の話題や暗号理論への応用などに詳しい本です．それだけでなく，解析的整数論の話題も含まれ，最低限の予備知識で最大限に整数論を楽しむことができます．</li>
-<li><a href="https://wstein.org/ent/">Elementary Number Theory: Primes, Congruences, and Secrets</a> 未読</li>
-<li><a href="https://math.gordon.edu/ntic/">Number Theory: In Context and Interactive</a> 未読</li>
-</ul>
+<p>といったことについてはライブラリの使用を認めます．</p>
+<p>それは Lean に置き換えると，<code>ℤ</code> が <code>LinearOrderedCommRing</code> という型クラスのインスタンスであることを認める，ということです．これは <code>Mathlib/Data/Int/Order/Basic.lean</code> で主張されているため，<code>import Mathlib.Data.Int.Order.Basic</code> を使用することは認めるということになります．</p>
+<div class="footnote-definition" id="logic"><sup class="footnote-definition-label">1</sup>
+<p>選択公理や排中律という言葉の意味が分からなくても大丈夫です．</p>
+</div>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
-                            <a rel="next" href="Prerequisite.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="Euclid.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -208,8 +211,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
-                    <a rel="next" href="Prerequisite.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="Euclid.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
