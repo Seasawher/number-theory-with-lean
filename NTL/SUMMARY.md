@@ -7,3 +7,4 @@
 - [前提条件](./Prerequisite.md)
 
 - [直線の格子点とEuclid のアルゴリズム](./Euclid.md)
+  - [整除関係](./Divisibility.md)
