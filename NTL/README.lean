@@ -1,3 +1,4 @@
+/-!
 # Lean で学ぶ初めての整数論
 
 定理証明支援系 Lean を使って，整数論を学んでいこうという本です．
@@ -17,3 +18,4 @@ Lean の解説ではなく数学の解説を目的としているため，読者
 * [A Computational Introduction to Number Theory and Algebra](https://shoup.net/ntb/) "Computational" とある通り，アルゴリズムの計算量の話題や暗号理論への応用などに詳しい本です．それだけでなく，解析的整数論の話題も含まれ，最低限の予備知識で最大限に整数論を楽しむことができます．
 * [Elementary Number Theory: Primes, Congruences, and Secrets](https://wstein.org/ent/) 未読
 * [Number Theory: In Context and Interactive](https://math.gordon.edu/ntic/) 未読
+-/
