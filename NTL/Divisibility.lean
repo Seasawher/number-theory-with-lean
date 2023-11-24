@@ -14,9 +14,31 @@ import Mathlib.Algebra.Order.Ring.CharZero --#
 /-! 「$a$ が $b$ を割り切る」というのは $a$ 目線の言い方ですが，$b$ 目線では「$b$ は $a$ の倍数(multiple)である」と言います．
 また，$a$ で $b$ が割り切れないとき，斜線を入れて $a ∤ b$ と書きます．-/
 
-example (a b : ℤ) : a ∣ b ↔ ∃ z : ℤ, a * z = b := by
-  dsimp [(· ∣ ·)]
-  aesop
+/-! ## Lean での定義
+
+Lean では，「割り切れる」ということは `Dvd` という型クラスで表現されます．その際，`∣` という記法も定義されています． -/
+
+section --#
+
+-- inductive Dvd.{u_1} : Type u_1 → Type u_1
+-- number of parameters: 1
+-- constructors:
+-- Dvd.mk : {α : Type u_1} → (α → α → Prop) → Dvd α
+#print Dvd
+
+variable (α : Type) [self : Dvd α]
+
+#check ((· ∣ ·) : α → α → Prop)
+
+end --#
+
+/-! そして整数 `Int` は `Dvd` のインスタンスです．これは `Int.instDvdInt` という名前で呼ばれています． -/
+
+-- def Int.instDvdInt : Dvd ℤ :=
+-- { dvd := fun a b => ∃ c, b = a * c }
+#print Int.instDvdInt
+
+#check ((· ∣ ·) : ℤ → ℤ → Prop)
 
 /-! ## 基本的な性質
 
