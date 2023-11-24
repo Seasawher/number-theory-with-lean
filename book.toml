@@ -11,5 +11,6 @@ create-missing = false
 build-dir = "book"
 
 [output.html]
-additional-js = ["assets/leanweb.js", "assets/fzf.umd.js", "assets/elasticlunr.js"]
+additional-js = ["assets/leanweb.js", "assets/fzf.umd.js", "assets/elasticlunr.js", "assets/edit.js"]
+edit-url-template = "https://github.com/Seasawher/number-theory-with-lean/edit/main/{path}"
 no-section-label = true
