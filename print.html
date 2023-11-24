@@ -86,7 +86,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Lean で学ぶ初めての整数論</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="Prerequisite.html">前提条件</a></li><li class="chapter-item expanded "><a href="Euclid.html">直線の格子点とEuclid のアルゴリズム</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Lean で学ぶ初めての整数論</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="Prerequisite.html">前提条件</a></li><li class="chapter-item expanded "><a href="Euclid.html">直線の格子点とEuclid のアルゴリズム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Divisibility.html">整除関係</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -216,6 +216,43 @@
 <p>仮に $a = b x$ という方程式が与えられたら，これが整数の範囲，つまり $x ∈ ℤ$ という条件下で解を持つかどうかは, $a$ を $b$ で割ったときの余りで判定できます．余りが 0 なら解があり，0 でなければ解はありません．</p>
 <p>シンプルな話ですが，これをもっと推し進めてみましょう．変数を1つ増やして，2変数にしてみます．つまり，直線 $a x + b y = c$ を考えます．これが格子点を持つかどうか，どうやったら判定できるでしょうか．言い換えれば，$x, y ∈ ℤ$ となるような解があるかどうか，あるとしてそれが何か，どうしたら計算できるでしょうか．</p>
 <p>これから見ていくように，この問題は Euclid のアルゴリズムと呼ばれる手続きを使うことで解くことができます．</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="整除関係"><a class="header" href="#整除関係">整除関係</a></h1>
+<h2 id="定義"><a class="header" href="#定義">定義</a></h2>
+<p>まず言葉の定義から始めましょう．</p>
+<p>整数 $a, b ∈ ℤ$ が与えられたとします．このとき $a$ が $b$ を割り切るとは，ある $z ∈ ℤ$ が存在して $a z = b$ となることを言います．これを $a ∣ b$ と書きます．</p>
+<p>「$a$ が $b$ を割り切る」というのは $a$ 目線の言い方ですが，$b$ 目線では「$b$ は $a$ の倍数(multiple)である」と言います．
+また，$a$ で $b$ が割り切れないとき，斜線を入れて $a ∤ b$ と書きます．</p>
+<pre><code class="language-lean">example (a b : ℤ) : a ∣ b ↔ ∃ z : ℤ, a * z = b := by
+  dsimp [(· ∣ ·)]
+  aesop
+</code></pre>
+<h2 id="基本的な性質"><a class="header" href="#基本的な性質">基本的な性質</a></h2>
+<p>定義からすぐに従う基本的な性質として，まずどんな整数 $a ∈ℤ$ に対しても $1 ∣ a$ であり，かつ $a ∣ a$ です．</p>
+<pre><code class="language-lean">/-- 1 はなんでも割り切る -/
+theorem one_dvd (a : ℤ) : 1 ∣ a := by
+  use a
+  simp
+
+/-- 必ず自分自身で割り切れる -/
+theorem dvd_refl (a : ℤ) : a ∣ a := by
+  use 1
+  simp
+</code></pre>
+<p>また，$a × 0 = 0$ なので任意の整数は $0$ を割り切ります．</p>
+<pre><code class="language-lean">theorem dvd_zero (a : ℤ) : a ∣ 0 := by
+  use 0
+  simp
+</code></pre>
+<p>さらに，整数 $a, b, c ∈ ℤ$ について $a b ∣ c$ ならば $a ∣ c$ が成り立ちます．</p>
+<pre><code class="language-lean">theorem dvd_of_mul_right_dvd (a b c : ℤ) : a * b ∣ c → a ∣ c := by
+  -- `a * b ∣ c` だと仮定します
+  intro h
+  -- 整除関係の定義から， `c = a * b * k` となる `k` が取れます．
+  have ⟨k, hk⟩ := h
+  -- したがって `a ∣ c` であることが従います．
+  use b * k
+  simp [hk, mul_assoc]
+</code></pre>
 
                     </main>
 
