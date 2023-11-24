@@ -85,7 +85,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Lean で学ぶ初めての整数論</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="Prerequisite.html">前提条件</a></li><li class="chapter-item expanded "><a href="Euclid.html">直線の格子点とEuclid のアルゴリズム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Divisibility.html" class="active">整除関係</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Lean で学ぶ初めての整数論</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="Prerequisite.html">前提条件</a></li><li class="chapter-item expanded "><a href="Euclid.html">直線の格子点とEuclid のアルゴリズム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Divisibility.html" class="active">整除関係</a></li><li class="chapter-item expanded "><a href="DivisibilityEx.html">演習問題</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -188,9 +188,24 @@
 <p>整数 $a, b ∈ ℤ$ が与えられたとします．このとき $a$ が $b$ を割り切るとは，ある $z ∈ ℤ$ が存在して $a z = b$ となることを言います．これを $a ∣ b$ と書きます．</p>
 <p>「$a$ が $b$ を割り切る」というのは $a$ 目線の言い方ですが，$b$ 目線では「$b$ は $a$ の倍数(multiple)である」と言います．
 また，$a$ で $b$ が割り切れないとき，斜線を入れて $a ∤ b$ と書きます．</p>
-<pre><code class="language-lean">example (a b : ℤ) : a ∣ b ↔ ∃ z : ℤ, a * z = b := by
-  dsimp [(· ∣ ·)]
-  aesop
+<h2 id="lean-での定義"><a class="header" href="#lean-での定義">Lean での定義</a></h2>
+<p>Lean では，「割り切れる」ということは <code>Dvd</code> という型クラスで表現されます．その際，<code>∣</code> という記法も定義されています．</p>
+<pre><code class="language-lean">-- inductive Dvd.{u_1} : Type u_1 → Type u_1
+-- number of parameters: 1
+-- constructors:
+-- Dvd.mk : {α : Type u_1} → (α → α → Prop) → Dvd α
+#print Dvd
+
+variable (α : Type) [self : Dvd α]
+
+#check ((· ∣ ·) : α → α → Prop)
+</code></pre>
+<p>そして整数 <code>Int</code> は <code>Dvd</code> のインスタンスです．これは <code>Int.instDvdInt</code> という名前で呼ばれています．</p>
+<pre><code class="language-lean">-- def Int.instDvdInt : Dvd ℤ :=
+-- { dvd := fun a b =&gt; ∃ c, b = a * c }
+#print Int.instDvdInt
+
+#check ((· ∣ ·) : ℤ → ℤ → Prop)
 </code></pre>
 <h2 id="基本的な性質"><a class="header" href="#基本的な性質">基本的な性質</a></h2>
 <p>定義からすぐに従う基本的な性質として，まずどんな整数 $a ∈ℤ$ に対しても $1 ∣ a$ であり，かつ $a ∣ a$ です．</p>
@@ -228,6 +243,9 @@ theorem dvd_refl (a : ℤ) : a ∣ a := by
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
+                            <a rel="next" href="DivisibilityEx.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -239,6 +257,9 @@ theorem dvd_refl (a : ℤ) : a ∣ a := by
                         <i class="fa fa-angle-left"></i>
                     </a>
 
+                    <a rel="next" href="DivisibilityEx.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
