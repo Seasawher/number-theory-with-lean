@@ -13,7 +13,7 @@ Lean は定理証明支援系なので，話の中で必要になるすべての
 
 といったことについてはライブラリの使用を認めます．
 
-それは Lean に置き換えると，`ℤ` が `LinearOrderedCommRing` という型クラスのインスタンスであることを認める，ということです．これは `Mathlib/Data/Int/Order/Basic.lean` で主張されているため，`import Mathlib.Data.Int.Order.Basic` を使用することは認めるということになります．
+それは Lean に置き換えると，`ℤ` が `LinearOrderedCommRing` という型クラスのインスタンスであることを認める，ということです．これは `Mathlib/Data/Int/Order/Basic.lean` で主張されているため，`import Mathlib.Data.Int.Order.Basic` を使用することは認めるということになります．なお，場合によりもっと狭い範囲に制限することもあります．
 -/
 
 /-!
