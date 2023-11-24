@@ -1,3 +1,4 @@
--- This module serves as the root of the `NTL` library.
--- Import modules here that should be built as part of the library.
-import «NTL».Basic
+import NTL.Divisibility
+import NTL.Euclid
+import NTL.Prerequisite
+import NTL.README
