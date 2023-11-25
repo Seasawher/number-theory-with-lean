@@ -12,3 +12,6 @@
 book/
 NTL/*.md
 !NTL/SUMMARY.md
+
+# mdbook-indexing
+!NTL/INDEXING.md

@@ -9,3 +9,5 @@
 - [直線の格子点とEuclid のアルゴリズム](./Euclid.md)
   - [整除関係](./Divisibility.md)
   - [公約数](./CommonDivisor.md)
+
+- [Index](./INDEXING.md)
