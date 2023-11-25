@@ -11,8 +11,12 @@ import Mathlib.Algebra.Order.Ring.CharZero --#
 整数 $a, b ∈ ℤ$ が与えられたとします．このとき $a$ が $b$ を割り切るとは，ある $z ∈ ℤ$ が存在して $a z = b$ となることを言います．これを $a ∣ b$ と書きます．
 -/
 
-/-! 「$a$ が $b$ を割り切る」というのは $a$ 目線の言い方ですが，$b$ 目線では「$b$ は $a$ の倍数(multiple)である」と言います．
-また，$a$ で $b$ が割り切れないとき，斜線を入れて $a ∤ b$ と書きます．-/
+/-! $a ∣ b$ であることを次のようにも言いますが，すべて同じ意味です．
+* $b$ は $a$ で割り切れる
+* $b$ は $a$ の倍数(multiple)である
+* $a$ は $b$ の約数(divisor)である
+
+$a ∣ b$ でないとき，斜線を入れて $a ∤ b$ と書きます．-/
 
 /-! ## Lean での定義
 
@@ -81,4 +85,3 @@ theorem dvd_of_mul_right_dvd (a b c : ℤ) : a * b ∣ c → a ∣ c ∧ b ∣ c
     use a * k
     simp [hk, ←mul_assoc]
     rw [show a * b = b * a from by simp [mul_comm]]
-  
