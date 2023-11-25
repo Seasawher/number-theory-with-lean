@@ -87,7 +87,7 @@ theorem dvd_of_mul_right_dvd (a b c : ℤ) : a * b ∣ c → a ∣ c ∧ b ∣ c
     rw [show a * b = b * a from by simp [mul_comm]]
 
 /-! ## 演習問題
-いま導入した整除関係の定義を使って，次の `sorry` の部分を埋めてみてください．
+次の `sorry` の部分を埋めてみてください．
 -/
 
 variable (a b c : ℤ)
