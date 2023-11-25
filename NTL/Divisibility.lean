@@ -2,6 +2,8 @@ import Mathlib.Data.Int.Basic --#
 import Mathlib.Algebra.Order.Group.Abs --#
 import Mathlib.Algebra.Order.Ring.CharZero --#
 
+section --#
+
 /-! # 整除関係
 
 ## 定義
@@ -22,8 +24,6 @@ $a ∣ b$ でないとき，斜線を入れて $a ∤ b$ と書きます．-/
 
 Lean では，「割り切れる」ということは `Dvd` という型クラスで表現されます．その際，`∣` という記法も定義されています． -/
 
-section --#
-
 -- inductive Dvd.{u_1} : Type u_1 → Type u_1
 -- number of parameters: 1
 -- constructors:
@@ -34,16 +34,17 @@ variable (α : Type) [self : Dvd α]
 
 #check ((· ∣ ·) : α → α → Prop)
 
-end --#
-
-/-! そして整数 `Int` は `Dvd` のインスタンスです．これは `Int.instDvdInt` という名前で呼ばれています． -/
+/-! そして整数 `Int` や自然数 `Nat` は `Dvd` のインスタンスです. -/
 
 -- Int.instDvdInt
 #synth Dvd Int
 
-#check ((· ∣ ·) : ℤ → ℤ → Prop)
+-- Nat.instDvdNat
+#synth Dvd Nat
 
 /-! ## 基本的な性質
+
+以下で紹介する性質は `ℤ` だけでなく `ℕ` でも成り立ちますが，今回は代表して `ℤ` の話として説明します．
 
 定義からすぐに従う基本的な性質として，まずどんな整数 $a ∈ℤ$ に対しても $1 ∣ a$ であり，かつ $a ∣ a$ です．
 -/
@@ -102,3 +103,5 @@ example (h : a ∣ b) : a ∣ b * c := by
 
 example : ∃ a, 11 ∣ (2 ^ a + 1) := by
   sorry
+
+end --#
