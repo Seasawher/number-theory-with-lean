@@ -86,7 +86,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Lean で学ぶ初めての整数論</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="Prerequisite.html">前提条件</a></li><li class="chapter-item expanded "><a href="Euclid.html">直線の格子点とEuclid のアルゴリズム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Divisibility.html">整除関係</a></li><li class="chapter-item expanded "><a href="CommonDivisor.html">公約数</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Lean で学ぶ初めての整数論</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="Prerequisite.html">前提条件</a></li><li class="chapter-item expanded "><a href="Euclid.html">直線の格子点とEuclid のアルゴリズム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Divisibility.html">整除関係</a></li><li class="chapter-item expanded "><a href="CommonDivisor.html">公約数</a></li></ol></li><li class="chapter-item expanded "><a href="INDEXING.html">Index</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -224,12 +224,12 @@
 <div style="break-before: page; page-break-before: always;"></div><h1 id="整除関係"><a class="header" href="#整除関係">整除関係</a></h1>
 <h2 id="定義"><a class="header" href="#定義">定義</a></h2>
 <p>まず言葉の定義から始めましょう．</p>
-<p>整数 $a, b ∈ ℤ$ が与えられたとします．このとき $a$ が $b$ を割り切るとは，ある $z ∈ ℤ$ が存在して $a z = b$ となることを言います．これを $a ∣ b$ と書きます．</p>
+<p>整数 $a, b ∈ ℤ$ が与えられたとします．このとき $a$ が $b$ を<a name="a001"></a>割り切るとは，ある $z ∈ ℤ$ が存在して $a z = b$ となることを言います．これを <a name="a002"></a>$a ∣ b$ と書きます．</p>
 <p>$a ∣ b$ であることを次のようにも言いますが，すべて同じ意味です．</p>
 <ul>
 <li>$b$ は $a$ で割り切れる</li>
-<li>$b$ は $a$ の倍数(multiple)である</li>
-<li>$a$ は $b$ の約数(divisor)である</li>
+<li>$b$ は $a$ の<a name="a003"></a>倍数(multiple)である</li>
+<li>$a$ は $b$ の<a name="a004"></a>約数(divisor)である</li>
 </ul>
 <p>$a ∣ b$ でないとき，斜線を入れて $a ∤ b$ と書きます．</p>
 <h2 id="lean-での定義"><a class="header" href="#lean-での定義">Lean での定義</a></h2>
@@ -308,8 +308,8 @@ example : ∃ a, 11 ∣ (2 ^ a + 1) := by
 <div style="break-before: page; page-break-before: always;"></div><h1 id="公約数"><a class="header" href="#公約数">公約数</a></h1>
 <p>この節では大小関係も考えるので，話を整数 $ℤ$ から自然数 $ℕ$ に限定します．</p>
 <h2 id="公約数と最大公約数"><a class="header" href="#公約数と最大公約数">公約数と最大公約数</a></h2>
-<p>2 つの自然数 $a$ と $b$ に対して，そのどちらの約数でもあるような自然数のことを，公約数(common divisor)といいます．言い換えると，$d ∈ ℕ$ が $a$ と $b$ の公約数であるとは，$d ∣ a$ かつ $d ∣ b$ が成り立つことです．</p>
-<p><a href="./Divisibility.html">整除関係の節</a>で見たように，$1$ はどんな自然数の約数でもあるため，$a$, $b$ の公約数は必ず1つは存在します．かつ，公約数が無限に存在することはありえません．したがって，最大のものが存在します．それを $a$ と $b$ の最大公約数(greatest common divisor)と呼ぶことにして，$\gcd(a, b)$ と書きます．</p>
+<p>2 つの自然数 $a$ と $b$ に対して，そのどちらの約数でもあるような自然数のことを，<a name="a001"></a>公約数(common divisor)といいます．言い換えると，$d ∈ ℕ$ が $a$ と $b$ の公約数であるとは，$d ∣ a$ かつ $d ∣ b$ が成り立つことです．</p>
+<p><a href="./Divisibility.html">整除関係の節</a>で見たように，$1$ はどんな自然数の約数でもあるため，$a$, $b$ の公約数は必ず1つは存在します．かつ，公約数が無限に存在することはありえません．したがって，最大のものが存在します．それを $a$ と $b$ の<a name="a002"></a>最大公約数(greatest common divisor)と呼ぶことにして，$\gcd(a, b)$ と書きます．</p>
 <h2 id="lean-での定義-1"><a class="header" href="#lean-での定義-1">Lean での定義</a></h2>
 <p>有限集合から最大のものを取ってくるだけなので，じかに計算することができます．</p>
 <pre><code class="language-lean">def gcd (a b : ℕ) : ℕ := Id.run do
@@ -337,6 +337,13 @@ example : ∃ a, 11 ∣ (2 ^ a + 1) := by
 </code></pre>
 <p>上記の <code>gcd</code> 関数で解決するように見えますが，そうではありません．$\min (a, b)$ に比例する計算時間が必要になるため，<code>#time</code> の出力を見ればわかるように少し桁が大きくなっただけでかなり計算に時間がかかるようになります．</p>
 <p>また，これは後で分かることですが，公約数という概念が持つ構造を生かし切れていません．公約数を計算するもっと良い方法があります．</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="index"><a class="header" href="#index">Index</a></h1>
+<p>$a ∣ b$ , <a href="Divisibility.html#a002">1</a><br/>
+倍数(multiple), <a href="Divisibility.html#a003">1</a><br/>
+公約数(common divisor), <a href="CommonDivisor.html#a001">1</a><br/>
+割り切る, <a href="Divisibility.html#a001">1</a><br/>
+最大公約数(greatest common divisor), <a href="CommonDivisor.html#a002">1</a><br/>
+約数(divisor), <a href="Divisibility.html#a004">1</a><br/></p>
 
                     </main>
 

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>整除関係 - Lean で学ぶ初めての整数論</title>
+        <title>Index - Lean で学ぶ初めての整数論</title>
 
 
         <!-- Custom HTML head -->
@@ -85,7 +85,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Lean で学ぶ初めての整数論</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="Prerequisite.html">前提条件</a></li><li class="chapter-item expanded "><a href="Euclid.html">直線の格子点とEuclid のアルゴリズム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Divisibility.html" class="active">整除関係</a></li><li class="chapter-item expanded "><a href="CommonDivisor.html">公約数</a></li></ol></li><li class="chapter-item expanded "><a href="INDEXING.html">Index</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Lean で学ぶ初めての整数論</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="Prerequisite.html">前提条件</a></li><li class="chapter-item expanded "><a href="Euclid.html">直線の格子点とEuclid のアルゴリズム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Divisibility.html">整除関係</a></li><li class="chapter-item expanded "><a href="CommonDivisor.html">公約数</a></li></ol></li><li class="chapter-item expanded "><a href="INDEXING.html" class="active">Index</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -153,7 +153,7 @@
                         <a href="https://github.com/Seasawher/number-theory-with-lean" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/Seasawher/number-theory-with-lean/edit/main/NTL/Divisibility.md" title="Suggest an edit" aria-label="Suggest an edit">
+                        <a href="https://github.com/Seasawher/number-theory-with-lean/edit/main/NTL/INDEXING.md" title="Suggest an edit" aria-label="Suggest an edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -182,102 +182,22 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="整除関係"><a class="header" href="#整除関係">整除関係</a></h1>
-<h2 id="定義"><a class="header" href="#定義">定義</a></h2>
-<p>まず言葉の定義から始めましょう．</p>
-<p>整数 $a, b ∈ ℤ$ が与えられたとします．このとき $a$ が $b$ を<a name="a001"></a>割り切るとは，ある $z ∈ ℤ$ が存在して $a z = b$ となることを言います．これを <a name="a002"></a>$a ∣ b$ と書きます．</p>
-<p>$a ∣ b$ であることを次のようにも言いますが，すべて同じ意味です．</p>
-<ul>
-<li>$b$ は $a$ で割り切れる</li>
-<li>$b$ は $a$ の<a name="a003"></a>倍数(multiple)である</li>
-<li>$a$ は $b$ の<a name="a004"></a>約数(divisor)である</li>
-</ul>
-<p>$a ∣ b$ でないとき，斜線を入れて $a ∤ b$ と書きます．</p>
-<h2 id="lean-での定義"><a class="header" href="#lean-での定義">Lean での定義</a></h2>
-<p>Lean では，「割り切れる」ということは <code>Dvd</code> という型クラスで表現されます．その際，<code>∣</code> という記法も定義されています．</p>
-<pre><code class="language-lean">-- inductive Dvd.{u_1} : Type u_1 → Type u_1
--- number of parameters: 1
--- constructors:
--- Dvd.mk : {α : Type u_1} → (α → α → Prop) → Dvd α
-#print Dvd
-
-variable (α : Type) [self : Dvd α]
-
-#check ((· ∣ ·) : α → α → Prop)
-</code></pre>
-<p>そして整数 <code>Int</code> や自然数 <code>Nat</code> は <code>Dvd</code> のインスタンスです.</p>
-<pre><code class="language-lean">-- Int.instDvdInt
-#synth Dvd Int
-
--- Nat.instDvdNat
-#synth Dvd Nat
-</code></pre>
-<h2 id="基本的な性質"><a class="header" href="#基本的な性質">基本的な性質</a></h2>
-<p>以下で紹介する性質は <code>ℤ</code> だけでなく <code>ℕ</code> でも成り立ちますが，今回は代表して <code>ℤ</code> の話として説明します．</p>
-<p>定義からすぐに従う基本的な性質として，まずどんな整数 $a ∈ℤ$ に対しても $1 ∣ a$ であり，かつ $a ∣ a$ です．</p>
-<pre><code class="language-lean">/-- 1 はなんでも割り切る -/
-theorem one_dvd (a : ℤ) : 1 ∣ a := by
-  use a
-  simp
-
-/-- 必ず自分自身で割り切れる -/
-theorem dvd_refl (a : ℤ) : a ∣ a := by
-  use 1
-  simp
-</code></pre>
-<p>また，$a × 0 = 0$ なので任意の整数は $0$ を割り切ります．</p>
-<pre><code class="language-lean">theorem dvd_zero (a : ℤ) : a ∣ 0 := by
-  use 0
-  simp
-</code></pre>
-<p>さらに，整数 $a, b, c ∈ ℤ$ について $a b ∣ c$ ならば $a ∣ c$ かつ $b ∣ c$ も成り立ちます．</p>
-<pre><code class="language-lean">theorem dvd_of_mul_right_dvd (a b c : ℤ) : a * b ∣ c → a ∣ c ∧ b ∣ c := by
-  -- `a * b ∣ c` だと仮定します
-  intro h
-
-  -- 整除関係の定義から， `c = a * b * k` となる `k` が取れます．
-  have ⟨k, hk⟩ := h
-  clear h
-
-  constructor
-  case left =&gt;
-    -- したがって `a ∣ c` であることが従います．
-    use b * k
-    simp [hk, mul_assoc]
-
-  case right =&gt;
-    -- 同様に `b ∣ c` であることも従います．
-    use a * k
-    simp [hk, ←mul_assoc]
-    rw [show a * b = b * a from by simp [mul_comm]]
-</code></pre>
-<h2 id="演習問題"><a class="header" href="#演習問題">演習問題</a></h2>
-<p>次の <code>sorry</code> の部分を埋めてみてください．</p>
-<pre><code class="language-lean">variable (a b c : ℤ)
-
--- 割り算の定義の確認
-example : a ∣ b ↔ ∃ c : ℤ, b = a * c := by
-  sorry
-
--- 倍数に何か乗じても倍数
-example (h : a ∣ b) : a ∣ b * c := by
-  sorry
-
-example : ∃ a, 11 ∣ (2 ^ a + 1) := by
-  sorry
-</code></pre>
+                        <h1 id="index"><a class="header" href="#index">Index</a></h1>
+<p>$a ∣ b$ , <a href="Divisibility.html#a002">1</a><br/>
+倍数(multiple), <a href="Divisibility.html#a003">1</a><br/>
+公約数(common divisor), <a href="CommonDivisor.html#a001">1</a><br/>
+割り切る, <a href="Divisibility.html#a001">1</a><br/>
+最大公約数(greatest common divisor), <a href="CommonDivisor.html#a002">1</a><br/>
+約数(divisor), <a href="Divisibility.html#a004">1</a><br/></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="Euclid.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="CommonDivisor.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="CommonDivisor.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -285,13 +205,10 @@ example : ∃ a, 11 ∣ (2 ^ a + 1) := by
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="Euclid.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="CommonDivisor.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="CommonDivisor.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
             </nav>
 
         </div>
