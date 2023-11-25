@@ -85,3 +85,20 @@ theorem dvd_of_mul_right_dvd (a b c : ℤ) : a * b ∣ c → a ∣ c ∧ b ∣ c
     use a * k
     simp [hk, ←mul_assoc]
     rw [show a * b = b * a from by simp [mul_comm]]
+
+/-! ## 演習問題
+いま導入した整除関係の定義を使って，次の `sorry` の部分を埋めてみてください．
+-/
+
+variable (a b c : ℤ)
+
+-- 割り算の定義の確認
+example : a ∣ b ↔ ∃ c : ℤ, b = a * c := by
+  sorry
+
+-- 倍数に何か乗じても倍数
+example (h : a ∣ b) : a ∣ b * c := by
+  sorry
+
+example : ∃ a, 11 ∣ (2 ^ a + 1) := by
+  sorry

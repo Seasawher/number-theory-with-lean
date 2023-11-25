@@ -8,4 +8,3 @@
 
 - [直線の格子点とEuclid のアルゴリズム](./Euclid.md)
   - [整除関係](./Divisibility.md)
-  - [演習問題](./DivisibilityEx.md)
