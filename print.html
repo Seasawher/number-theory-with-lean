@@ -86,7 +86,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Lean で学ぶ初めての整数論</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="Prerequisite.html">前提条件</a></li><li class="chapter-item expanded "><a href="Euclid.html">直線の格子点とEuclid のアルゴリズム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Divisibility.html">整除関係</a></li><li class="chapter-item expanded "><a href="DivisibilityEx.html">演習問題</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Lean で学ぶ初めての整数論</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="Prerequisite.html">前提条件</a></li><li class="chapter-item expanded "><a href="Euclid.html">直線の格子点とEuclid のアルゴリズム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Divisibility.html">整除関係</a></li><li class="chapter-item expanded "><a href="CommonDivisor.html">公約数</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -183,6 +183,8 @@
                         <h1 id="lean-で学ぶ初めての整数論"><a class="header" href="#lean-で学ぶ初めての整数論">Lean で学ぶ初めての整数論</a></h1>
 <p>定理証明支援系 Lean を使って，整数論を学んでいこうという本です．</p>
 <p>Lean の解説ではなく数学の解説を目的としているため，読者が Lean にある程度慣れていることを仮定しています．</p>
+<h2 id="本書の読む際の注意"><a class="header" href="#本書の読む際の注意">本書の読む際の注意</a></h2>
+<p>本書のすべての Lean コードブロックには Lean Playground へジャンプするボタンが搭載されています．しかし必要な <code>import</code> 文などが含まれていないため，ほとんどの場合そのままでは動かないと思います．右上にある編集(suggest an edit)ボタン <i class="fa fa-edit"></i> をクリックすると，元の <code>*.lean</code> ファイルにジャンプすることができますから，それを Playground にコピーして実行してください．</p>
 <h2 id="リンク集"><a class="header" href="#リンク集">リンク集</a></h2>
 <p>無料で閲覧できるものに限定して，参考になりそうな資料を紹介します．Lean については，次のようなものがあります．</p>
 <ul>
@@ -223,8 +225,13 @@
 <h2 id="定義"><a class="header" href="#定義">定義</a></h2>
 <p>まず言葉の定義から始めましょう．</p>
 <p>整数 $a, b ∈ ℤ$ が与えられたとします．このとき $a$ が $b$ を割り切るとは，ある $z ∈ ℤ$ が存在して $a z = b$ となることを言います．これを $a ∣ b$ と書きます．</p>
-<p>「$a$ が $b$ を割り切る」というのは $a$ 目線の言い方ですが，$b$ 目線では「$b$ は $a$ の倍数(multiple)である」と言います．
-また，$a$ で $b$ が割り切れないとき，斜線を入れて $a ∤ b$ と書きます．</p>
+<p>$a ∣ b$ であることを次のようにも言いますが，すべて同じ意味です．</p>
+<ul>
+<li>$b$ は $a$ で割り切れる</li>
+<li>$b$ は $a$ の倍数(multiple)である</li>
+<li>$a$ は $b$ の約数(divisor)である</li>
+</ul>
+<p>$a ∣ b$ でないとき，斜線を入れて $a ∤ b$ と書きます．</p>
 <h2 id="lean-での定義"><a class="header" href="#lean-での定義">Lean での定義</a></h2>
 <p>Lean では，「割り切れる」ということは <code>Dvd</code> という型クラスで表現されます．その際，<code>∣</code> という記法も定義されています．</p>
 <pre><code class="language-lean">-- inductive Dvd.{u_1} : Type u_1 → Type u_1
@@ -237,14 +244,15 @@ variable (α : Type) [self : Dvd α]
 
 #check ((· ∣ ·) : α → α → Prop)
 </code></pre>
-<p>そして整数 <code>Int</code> は <code>Dvd</code> のインスタンスです．これは <code>Int.instDvdInt</code> という名前で呼ばれています．</p>
-<pre><code class="language-lean">-- def Int.instDvdInt : Dvd ℤ :=
--- { dvd := fun a b =&gt; ∃ c, b = a * c }
-#print Int.instDvdInt
+<p>そして整数 <code>Int</code> や自然数 <code>Nat</code> は <code>Dvd</code> のインスタンスです.</p>
+<pre><code class="language-lean">-- Int.instDvdInt
+#synth Dvd Int
 
-#check ((· ∣ ·) : ℤ → ℤ → Prop)
+-- Nat.instDvdNat
+#synth Dvd Nat
 </code></pre>
 <h2 id="基本的な性質"><a class="header" href="#基本的な性質">基本的な性質</a></h2>
+<p>以下で紹介する性質は <code>ℤ</code> だけでなく <code>ℕ</code> でも成り立ちますが，今回は代表して <code>ℤ</code> の話として説明します．</p>
 <p>定義からすぐに従う基本的な性質として，まずどんな整数 $a ∈ℤ$ に対しても $1 ∣ a$ であり，かつ $a ∣ a$ です．</p>
 <pre><code class="language-lean">/-- 1 はなんでも割り切る -/
 theorem one_dvd (a : ℤ) : 1 ∣ a := by
@@ -261,25 +269,74 @@ theorem dvd_refl (a : ℤ) : a ∣ a := by
   use 0
   simp
 </code></pre>
-<p>さらに，整数 $a, b, c ∈ ℤ$ について $a b ∣ c$ ならば $a ∣ c$ が成り立ちます．</p>
-<pre><code class="language-lean">theorem dvd_of_mul_right_dvd (a b c : ℤ) : a * b ∣ c → a ∣ c := by
+<p>さらに，整数 $a, b, c ∈ ℤ$ について $a b ∣ c$ ならば $a ∣ c$ かつ $b ∣ c$ も成り立ちます．</p>
+<pre><code class="language-lean">theorem dvd_of_mul_right_dvd (a b c : ℤ) : a * b ∣ c → a ∣ c ∧ b ∣ c := by
   -- `a * b ∣ c` だと仮定します
   intro h
+
   -- 整除関係の定義から， `c = a * b * k` となる `k` が取れます．
   have ⟨k, hk⟩ := h
-  -- したがって `a ∣ c` であることが従います．
-  use b * k
-  simp [hk, mul_assoc]
+  clear h
+
+  constructor
+  case left =&gt;
+    -- したがって `a ∣ c` であることが従います．
+    use b * k
+    simp [hk, mul_assoc]
+
+  case right =&gt;
+    -- 同様に `b ∣ c` であることも従います．
+    use a * k
+    simp [hk, ←mul_assoc]
+    rw [show a * b = b * a from by simp [mul_comm]]
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><pre><code class="language-lean">-- 以下の import 文は変更しないでください
-import Mathlib.Data.Int.Basic
-import Mathlib.Algebra.Order.Group.Abs
-import Mathlib.Algebra.Order.Ring.CharZero
+<h2 id="演習問題"><a class="header" href="#演習問題">演習問題</a></h2>
+<p>次の <code>sorry</code> の部分を埋めてみてください．</p>
+<pre><code class="language-lean">variable (a b c : ℤ)
 
 -- 割り算の定義の確認
-example (a b : ℤ) : a ∣ b ↔ ∃ c : ℤ, b = a * c := by
+example : a ∣ b ↔ ∃ c : ℤ, b = a * c := by
+  sorry
+
+-- 倍数に何か乗じても倍数
+example (h : a ∣ b) : a ∣ b * c := by
+  sorry
+
+example : ∃ a, 11 ∣ (2 ^ a + 1) := by
   sorry
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="公約数"><a class="header" href="#公約数">公約数</a></h1>
+<p>この節では大小関係も考えるので，話を整数 $ℤ$ から自然数 $ℕ$ に限定します．</p>
+<h2 id="公約数と最大公約数"><a class="header" href="#公約数と最大公約数">公約数と最大公約数</a></h2>
+<p>2 つの自然数 $a$ と $b$ に対して，そのどちらの約数でもあるような自然数のことを，公約数(common divisor)といいます．言い換えると，$d ∈ ℕ$ が $a$ と $b$ の公約数であるとは，$d ∣ a$ かつ $d ∣ b$ が成り立つことです．</p>
+<p><a href="./Divisibility.html">整除関係の節</a>で見たように，$1$ はどんな自然数の約数でもあるため，$a$, $b$ の公約数は必ず1つは存在します．かつ，公約数が無限に存在することはありえません．したがって，最大のものが存在します．それを $a$ と $b$ の最大公約数(greatest common divisor)と呼ぶことにして，$\gcd(a, b)$ と書きます．</p>
+<h2 id="lean-での定義-1"><a class="header" href="#lean-での定義-1">Lean での定義</a></h2>
+<p>有限集合から最大のものを取ってくるだけなので，じかに計算することができます．</p>
+<pre><code class="language-lean">def gcd (a b : ℕ) : ℕ := Id.run do
+  -- `do` の代わりに `Id.run do` とすることで，
+  -- pure code の中で do notation を使えます．
+  -- 細かいことなので気にしなくていいです.
+
+  -- `a` と `b` のうち小さい方までの自然数全体
+  let xs := List.reverse $ List.range $ min a b
+
+  for x in xs do
+    if x ∣ a ∧ x ∣ b then
+      return x
+
+  -- このコードは実行されませんが必要です
+  return 0
+
+
+#guard gcd 12 18 = 6
+
+#guard gcd 37 92 = 1
+
+-- だいたい 2000 ~ 2200ms 程度
+#time #eval gcd 12345678 87654321
+</code></pre>
+<p>上記の <code>gcd</code> 関数で解決するように見えますが，そうではありません．$\min (a, b)$ に比例する計算時間が必要になるため，<code>#time</code> の出力を見ればわかるように少し桁が大きくなっただけでかなり計算に時間がかかるようになります．</p>
+<p>また，これは後で分かることですが，公約数という概念が持つ構造を生かし切れていません．公約数を計算するもっと良い方法があります．</p>
 
                     </main>
 
