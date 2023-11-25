@@ -60,13 +60,25 @@ theorem dvd_zero (a : ℤ) : a ∣ 0 := by
   use 0
   simp
 
-/-! さらに，整数 $a, b, c ∈ ℤ$ について $a b ∣ c$ ならば $a ∣ c$ が成り立ちます． -/
+/-! さらに，整数 $a, b, c ∈ ℤ$ について $a b ∣ c$ ならば $a ∣ c$ かつ $b ∣ c$ も成り立ちます． -/
 
-theorem dvd_of_mul_right_dvd (a b c : ℤ) : a * b ∣ c → a ∣ c := by
+theorem dvd_of_mul_right_dvd (a b c : ℤ) : a * b ∣ c → a ∣ c ∧ b ∣ c := by
   -- `a * b ∣ c` だと仮定します
   intro h
+
   -- 整除関係の定義から， `c = a * b * k` となる `k` が取れます．
   have ⟨k, hk⟩ := h
-  -- したがって `a ∣ c` であることが従います．
-  use b * k
-  simp [hk, mul_assoc]
+  clear h
+
+  constructor
+  case left =>
+    -- したがって `a ∣ c` であることが従います．
+    use b * k
+    simp [hk, mul_assoc]
+
+  case right =>
+    -- 同様に `b ∣ c` であることも従います．
+    use a * k
+    simp [hk, ←mul_assoc]
+    rw [show a * b = b * a from by simp [mul_comm]]
+  
