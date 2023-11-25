@@ -34,9 +34,8 @@ end --#
 
 /-! そして整数 `Int` は `Dvd` のインスタンスです．これは `Int.instDvdInt` という名前で呼ばれています． -/
 
--- def Int.instDvdInt : Dvd ℤ :=
--- { dvd := fun a b => ∃ c, b = a * c }
-#print Int.instDvdInt
+-- Int.instDvdInt
+#synth Dvd Int
 
 #check ((· ∣ ·) : ℤ → ℤ → Prop)
 
