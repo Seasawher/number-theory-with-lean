@@ -14,7 +14,7 @@ Array.from(document.querySelectorAll(".language-lean")).forEach(function (code_b
   let leanWebButton = document.createElement('button');
   leanWebButton.className = 'fa fa-external-link lean-web-button';
   leanWebButton.hidden = true;
-  leanWebButton.title = 'Run on lean4 playground';
+  leanWebButton.title = 'Run on Lean 4 playground';
   leanWebButton.setAttribute('aria-label', leanWebButton.title);
 
   // ボタンを挿入する
