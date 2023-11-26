@@ -13,7 +13,7 @@ build-dir = "book"
 [output.html]
 additional-js = ["assets/leanweb.js", "assets/fzf.umd.js", "assets/elasticlunr.js", "assets/edit.js"]
 git-repository-url = "https://github.com/Seasawher/number-theory-with-lean"
-edit-url-template = "https://github.com/Seasawher/number-theory-with-lean/edit/main/{path}"
+edit-url-template = "https://raw.githubusercontent.com/Seasawher/number-theory-with-lean/main/{path}"
 no-section-label = true
 
 [preprocessor.indexing]
