@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>前提条件 - Lean で学ぶ初めての整数論</title>
+        <title>イデアル - Lean で学ぶ初めての整数論</title>
 
 
         <!-- Custom HTML head -->
@@ -85,7 +85,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Lean で学ぶ初めての整数論</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="Prerequisite.html" class="active">前提条件</a></li><li class="chapter-item expanded "><a href="Euclid.html">直線の格子点とEuclid のアルゴリズム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Divisibility.html">整除関係</a></li><li class="chapter-item expanded "><a href="CommonDivisor.html">公約数</a></li><li class="chapter-item expanded "><a href="Ideal.html">イデアル</a></li><li class="chapter-item expanded "><div>Euclid の互除法</div></li><li class="chapter-item expanded "><div>Bézout の等式</div></li><li class="chapter-item expanded "><div>Euclid の互除法の計算量</div></li></ol></li><li class="chapter-item expanded "><div>無理数と素数</div></li><li><ol class="section"><li class="chapter-item expanded "><div>素数</div></li><li class="chapter-item expanded "><div>素因数分解の一意性</div></li><li class="chapter-item expanded "><div>既約元と素元</div></li><li class="chapter-item expanded "><div>素数は無限にある</div></li></ol></li><li class="chapter-item expanded "><a href="INDEXING.html">Index</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Lean で学ぶ初めての整数論</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="Prerequisite.html">前提条件</a></li><li class="chapter-item expanded "><a href="Euclid.html">直線の格子点とEuclid のアルゴリズム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Divisibility.html">整除関係</a></li><li class="chapter-item expanded "><a href="CommonDivisor.html">公約数</a></li><li class="chapter-item expanded "><a href="Ideal.html" class="active">イデアル</a></li><li class="chapter-item expanded "><div>Euclid の互除法</div></li><li class="chapter-item expanded "><div>Bézout の等式</div></li><li class="chapter-item expanded "><div>Euclid の互除法の計算量</div></li></ol></li><li class="chapter-item expanded "><div>無理数と素数</div></li><li><ol class="section"><li class="chapter-item expanded "><div>素数</div></li><li class="chapter-item expanded "><div>素因数分解の一意性</div></li><li class="chapter-item expanded "><div>既約元と素元</div></li><li class="chapter-item expanded "><div>素数は無限にある</div></li></ol></li><li class="chapter-item expanded "><a href="INDEXING.html">Index</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -153,7 +153,7 @@
                         <a href="https://github.com/Seasawher/number-theory-with-lean" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://raw.githubusercontent.com/Seasawher/number-theory-with-lean/main/NTL/Prerequisite.md" title="Suggest an edit" aria-label="Suggest an edit">
+                        <a href="https://raw.githubusercontent.com/Seasawher/number-theory-with-lean/main/NTL/Ideal.md" title="Suggest an edit" aria-label="Suggest an edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -182,32 +182,39 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="前提条件"><a class="header" href="#前提条件">前提条件</a></h1>
-<p>Lean は定理証明支援系なので，話の中で必要になるすべての概念・定義をすべて実装する必要があります．完璧に形式的で，機械が読めるような証明を書かなければいけないことを考えると，仕方のないことです．</p>
-<p>だからといって，「自然数の足し算は可換」とか「整数の掛け算と足し算は交換する」といったことをいちいち証明していると本題に入れなくなってしまうので，本書では適当にライブラリを引用することにします．</p>
-<p>どこまでを仮定として認めるかですが，数学の教科書に書いてあるような書き方をすると</p>
+                        <h1 id="イデアル"><a class="header" href="#イデアル">イデアル</a></h1>
+<h2 id="定義"><a class="header" href="#定義">定義</a></h2>
+<p>整数の部分集合 $I ⊆ ℤ$ が ( $ℤ$ の) <a name="a001"></a>イデアルであるとは，次を満たすことをいいます．</p>
 <ul>
-<li>選択公理や排中律 <sup class="footnote-reference"><a href="#logic">1</a></sup></li>
-<li>整数には負の数，ゼロ，正の数がある</li>
-<li>任意の2つの整数 $a, b$ は大小が比較できる．専門的な言い方をすると，整数には線形順序(全順序)が入っている．</li>
-<li>整数には足し算，引き算，掛け算，べき乗が定義されている</li>
-<li>足し算や掛け算は順序によらないし，括弧が不要．そして足し算と掛け算の間には分配法則が成り立つ．専門的な言い方をすると，整数は可換環をなす．</li>
+<li>$I$ は $0$ を含む．</li>
+<li>$I$ で引き算ができる．つまり，任意の $x ∈ I$ に対して $-x ∈ I$.</li>
+<li>$I$ は加法に対して閉じている．つまり，任意の $x, y ∈ I$ に対して $x + y ∈ I$.</li>
+<li>任意の整数 $a ∈ ℤ$ に対して $x ∈ I$ ならば $a x ∈ I$.</li>
 </ul>
-<p>といったことについてはライブラリの使用を認めます．</p>
-<p>それは Lean に置き換えると，<code>ℤ</code> が <code>LinearOrderedCommRing</code> という型クラスのインスタンスであることを認める，ということです．これは <code>Mathlib/Data/Int/Order/Basic.lean</code> で主張されているため，<code>import Mathlib.Data.Int.Order.Basic</code> を使用することは認めるということになります．なお，場合によりもっと狭い範囲に制限することもあります．</p>
-<div class="footnote-definition" id="logic"><sup class="footnote-definition-label">1</sup>
-<p>選択公理や排中律という言葉の意味が分からなくても大丈夫です．</p>
-</div>
+<h2 id="イデアルの典型例"><a class="header" href="#イデアルの典型例">イデアルの典型例</a></h2>
+<p>定義からすぐ従うことですが，具体例として次のものがあります．</p>
+<ul>
+<li>$ℤ$ 自身は $ℤ$ のイデアルです．</li>
+<li>また，$0$ だけからなる集合 $\{0\}$ もイデアルです．</li>
+</ul>
+<p>しかしイデアルの典型的な例は，ある整数 $a₁, a₂, ... , aₙ ∈ ℤ$ に対して，</p>
+<p>$$
+\{ a₁ x₁ + a₂ x₂ + ... + aₙ xₙ ∣ x₁, x₂, ... , xₙ ∈ ℤ \}
+$$</p>
+<p>として定義される集合です．これを <a name="a002"></a>$a₁, a₂, ... , aₙ$ で生成されるイデアルといい，$a₁ ℤ + a₂ ℤ + ... + aₙ ℤ$ と表します．</p>
+<p>特に，$a ∈ ℤ$ の倍数の全体もイデアルで，$a ℤ$ と書きます．</p>
+<h2 id="イデアルをなぜ考えるのか"><a class="header" href="#イデアルをなぜ考えるのか">イデアルをなぜ考えるのか</a></h2>
+<p>イデアルという言葉をここで導入したのは，「$a₁, a₂, ... , aₙ ∈ ℤ$ の倍数を任意に選んで足し合わせたもの」を表す簡潔な言葉を用意するためです．本来イデアルは整数だけでなく，多項式全体 $ℚ [X₁, ... , Xₙ]$ や，整数に無理数を足したもの $ℤ [\sqrt{2}]$ など様々な対象に対して定義できる興味深い概念ですが，ここでは深い話に触れることはありません．したがって，便利な略称程度に思っていただきたいと思います．</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="CommonDivisor.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="Euclid.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="INDEXING.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -217,11 +224,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="CommonDivisor.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="Euclid.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="INDEXING.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

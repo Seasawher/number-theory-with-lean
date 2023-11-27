@@ -86,7 +86,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Lean で学ぶ初めての整数論</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="Prerequisite.html">前提条件</a></li><li class="chapter-item expanded "><a href="Euclid.html">直線の格子点とEuclid のアルゴリズム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Divisibility.html">整除関係</a></li><li class="chapter-item expanded "><a href="CommonDivisor.html">公約数</a></li><li class="chapter-item expanded "><div>イデアル</div></li><li class="chapter-item expanded "><div>Euclid の互除法</div></li><li class="chapter-item expanded "><div>Bézout の等式</div></li><li class="chapter-item expanded "><div>Euclid の互除法の計算量</div></li></ol></li><li class="chapter-item expanded "><div>無理数と素数</div></li><li><ol class="section"><li class="chapter-item expanded "><div>素数</div></li><li class="chapter-item expanded "><div>素因数分解の一意性</div></li><li class="chapter-item expanded "><div>既約元と素元</div></li><li class="chapter-item expanded "><div>素数は無限にある</div></li></ol></li><li class="chapter-item expanded "><a href="INDEXING.html">Index</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Lean で学ぶ初めての整数論</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="Prerequisite.html">前提条件</a></li><li class="chapter-item expanded "><a href="Euclid.html">直線の格子点とEuclid のアルゴリズム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Divisibility.html">整除関係</a></li><li class="chapter-item expanded "><a href="CommonDivisor.html">公約数</a></li><li class="chapter-item expanded "><a href="Ideal.html">イデアル</a></li><li class="chapter-item expanded "><div>Euclid の互除法</div></li><li class="chapter-item expanded "><div>Bézout の等式</div></li><li class="chapter-item expanded "><div>Euclid の互除法の計算量</div></li></ol></li><li class="chapter-item expanded "><div>無理数と素数</div></li><li><ol class="section"><li class="chapter-item expanded "><div>素数</div></li><li class="chapter-item expanded "><div>素因数分解の一意性</div></li><li class="chapter-item expanded "><div>既約元と素元</div></li><li class="chapter-item expanded "><div>素数は無限にある</div></li></ol></li><li class="chapter-item expanded "><a href="INDEXING.html">Index</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -338,9 +338,34 @@ example : ∃ a, 11 ∣ (2 ^ a + 1) := by
 </code></pre>
 <p>上記の <code>gcd</code> 関数で解決するように見えますが，そうではありません．$\min (a, b)$ に比例する計算時間が必要になるため，<code>#time</code> の出力を見ればわかるように少し桁が大きくなっただけでかなり計算に時間がかかるようになります．</p>
 <p>また，これは後で分かることですが，公約数という概念が持つ構造を生かし切れていません．公約数を計算するもっと良い方法があります．</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="イデアル"><a class="header" href="#イデアル">イデアル</a></h1>
+<h2 id="定義-1"><a class="header" href="#定義-1">定義</a></h2>
+<p>整数の部分集合 $I ⊆ ℤ$ が ( $ℤ$ の) <a name="a001"></a>イデアルであるとは，次を満たすことをいいます．</p>
+<ul>
+<li>$I$ は $0$ を含む．</li>
+<li>$I$ で引き算ができる．つまり，任意の $x ∈ I$ に対して $-x ∈ I$.</li>
+<li>$I$ は加法に対して閉じている．つまり，任意の $x, y ∈ I$ に対して $x + y ∈ I$.</li>
+<li>任意の整数 $a ∈ ℤ$ に対して $x ∈ I$ ならば $a x ∈ I$.</li>
+</ul>
+<h2 id="イデアルの典型例"><a class="header" href="#イデアルの典型例">イデアルの典型例</a></h2>
+<p>定義からすぐ従うことですが，具体例として次のものがあります．</p>
+<ul>
+<li>$ℤ$ 自身は $ℤ$ のイデアルです．</li>
+<li>また，$0$ だけからなる集合 $\{0\}$ もイデアルです．</li>
+</ul>
+<p>しかしイデアルの典型的な例は，ある整数 $a₁, a₂, ... , aₙ ∈ ℤ$ に対して，</p>
+<p>$$
+\{ a₁ x₁ + a₂ x₂ + ... + aₙ xₙ ∣ x₁, x₂, ... , xₙ ∈ ℤ \}
+$$</p>
+<p>として定義される集合です．これを <a name="a002"></a>$a₁, a₂, ... , aₙ$ で生成されるイデアルといい，$a₁ ℤ + a₂ ℤ + ... + aₙ ℤ$ と表します．</p>
+<p>特に，$a ∈ ℤ$ の倍数の全体もイデアルで，$a ℤ$ と書きます．</p>
+<h2 id="イデアルをなぜ考えるのか"><a class="header" href="#イデアルをなぜ考えるのか">イデアルをなぜ考えるのか</a></h2>
+<p>イデアルという言葉をここで導入したのは，「$a₁, a₂, ... , aₙ ∈ ℤ$ の倍数を任意に選んで足し合わせたもの」を表す簡潔な言葉を用意するためです．本来イデアルは整数だけでなく，多項式全体 $ℚ [X₁, ... , Xₙ]$ や，整数に無理数を足したもの $ℤ [\sqrt{2}]$ など様々な対象に対して定義できる興味深い概念ですが，ここでは深い話に触れることはありません．したがって，便利な略称程度に思っていただきたいと思います．</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="index"><a class="header" href="#index">Index</a></h1>
 <p>$\gcd(a, b)$, <a href="CommonDivisor.html#a003">1</a><br/>
 $a ∣ b$ , <a href="Divisibility.html#a002">1</a><br/>
+$a₁, a₂, ... , aₙ$ で生成されるイデアル, <a href="Ideal.html#a002">1</a><br/>
+イデアル, <a href="Ideal.html#a001">1</a><br/>
 倍数(multiple), <a href="Divisibility.html#a003">1</a><br/>
 公約数(common divisor), <a href="CommonDivisor.html#a001">1</a><br/>
 割り切る, <a href="Divisibility.html#a001">1</a><br/>
