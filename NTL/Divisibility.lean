@@ -2,7 +2,7 @@ import Mathlib.Data.Int.Basic --#
 import Mathlib.Algebra.Order.Group.Abs --#
 import Mathlib.Algebra.Order.Ring.CharZero --#
 
-section --#
+namespace NTL --#
 
 /-! # 整除関係
 
@@ -104,4 +104,4 @@ example (h : a ∣ b) : a ∣ b * c := by
 example : ∃ a, 11 ∣ (2 ^ a + 1) := by
   sorry
 
-end --#
+end NTL --#
