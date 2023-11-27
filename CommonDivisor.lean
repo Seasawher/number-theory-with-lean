@@ -3,7 +3,7 @@ import Mathlib.Algebra.Order.Ring.CharZero --#
 import Mathlib.Data.Nat.Basic --#
 import Mathlib.Util.Time -- `#time` を使うため --#
 
-section --#
+namespace NTL --#
 
 /-! # 公約数
 
@@ -51,4 +51,4 @@ end Bad --#
 
 また，これは後で分かることですが，公約数という概念が持つ構造を生かし切れていません．公約数を計算するもっと良い方法があります．-/
 
-end --#
+end NTL --#
