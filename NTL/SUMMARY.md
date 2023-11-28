@@ -9,7 +9,7 @@
 - [直線の格子点とEuclid のアルゴリズム](./Euclid.md)
   - [整除関係](./Divisibility.md)
   - [公約数](./CommonDivisor.md)
-  - [イデアル](./Ideal.md)
+  - [イデアル]()
   - [Euclid の互除法]()
   - [Bézout の等式]()
   - [Euclid の互除法の計算量]()
