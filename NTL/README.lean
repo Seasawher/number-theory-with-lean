@@ -17,6 +17,7 @@ Lean の解説ではなく数学の解説を目的としているため，読者
 
 * [Mathematics in Lean](https://leanprover-community.github.io/mathematics_in_lean/) Lean で数学がどのように形式化できるか解説する教科書です．
 * [The mechanics of proof](https://hrmacbeth.github.io/math2001/) 数学的な証明の書き方について，Lean を使って説明した教科書です．一部 Mathlib にないタクティクを使っているところがあるので，読まれる際は注意してください．
+* [How to Prove It With Lean](https://djvelleman.github.io/HTPIwL/) 数学の証明の書き方を解説した教科書「How to Prove It」の内容を Lean を使って翻案したものです．
 * [Lean4 タクティク逆引きリスト](https://lean-ja.github.io/tactic-cheatsheet/) Lean 4 の基本的なタクティク・コマンドの早見表です．
 
 整数論については，次のようなものがあります.
